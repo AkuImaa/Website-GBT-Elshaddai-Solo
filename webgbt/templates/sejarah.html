@@ -1,0 +1,227 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+<!-- HEADER -->
+<header class="bg-blue-900 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+            <img src="{% static '/photo/logo.jpg' %}" class="w-10 h-10 rounded-full">
+            <a href="{% url 'home' %}" class="text-white font-bold text-lg">
+    GBT Elshaddai Solo
+</a>
+        </div>
+<!-- DROPDOWN MENU -->
+        <nav>
+            <ul class="flex gap-6">
+				<div class="relative group">
+				<button class="text-white font-medium">
+				Menu
+				</button>
+
+					<div class="absolute opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 bg-white text-black mt-2 rounded-lg shadow-lg w-48">
+						<a href="{% url 'jadwalibadah' %}" class="block px-4 py-2 hover:bg-gray-100">Ibadah</a>
+						<a href="{% url 'jadwalpelayanan' %}" class="block px-4 py-2 hover:bg-gray-100">Pelayan Altar</a>
+						<a href="{% url 'renungan_list' %}" class="block px-4 py-2 hover:bg-gray-100">Renungan</a>
+						<a href="{% url 'wartagereja' %}" class="block px-4 py-2 hover:bg-gray-100">Warta Gereja</a>
+					</div>
+				</div>
+<!-- dropwon login -->
+			<ul class="flex gap-6 items-center">
+			{% if user.is_authenticated %}
+
+    <li class="text-white">
+        Halo, {{ user.username }}
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}"
+           class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+           Logout
+        </a>
+    </li>
+{% else %}
+    <li>
+        <a href="{% url 'login' %}"
+           class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+           Login
+        </a>
+    </li>
+	{% endif %}
+
+			</ul>
+        </nav>
+    </div>
+</header>
+
+
+ <!-- Content -->
+    <section class="max-w-5xl mx-auto px-6 py-12">
+
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+
+            <h2 class="text-3xl font-bold text-blue-700 mb-6">
+                Profil Gereja
+            </h2>
+
+            <div class="space-y-6 text-gray-700 leading-relaxed text-justify">
+
+                <p>
+                    GBT ElShaddai Solo merupakan suatu gereja yang bernaung pada sinode
+                    Gereja Bethel Tabernakel yang berpusat di Surabaya. Gereja ini
+                    berlokasi di Kota Surakarta dengan alamat di Jalan Merbabu Timur VI,
+                    Nusukan, Kecamatan Banjarsari, Kota Surakarta, Jawa Tengah,
+                    kode pos 57127.
+                </p>
+
+                <p>
+                    Gembala sidang di gereja ini ialah
+                    <span class="font-semibold">
+                        Pdt. Filemon Hanaul Pagegi, S.Th, M.Th
+                    </span>.
+                </p>
+
+                <p>
+                    Sebelum menjadi gereja mandiri, gereja ini merupakan Pos PI cabang
+                    dari Gereja Bethel Tabernakel ElShaddai Karanganyar yang berlokasi
+                    di Sinongko, Gedong, Kecamatan Karanganyar, Kabupaten Karanganyar,
+                    Jawa Tengah kode pos 57716.
+                </p>
+
+                <p>
+                    Awal kepengurusan Pos PI ini diawali oleh
+                    <span class="font-semibold">
+                        Bapak Santoso
+                    </span>
+                    yang telah melayani tempat ini selama 23 tahun.
+                </p>
+
+                <p>
+                    Gereja ini mengalami pendewasaan dan resmi menjadi gereja mandiri
+                    yang berusia 3 tahun serta didewasakan pada tanggal
+                    <span class="font-semibold">
+                        3 April 2023
+                    </span>.
+                    Namun apabila dihitung sejak awal Pos PI berdiri hingga pendewasaan
+                    gereja, maka usia pelayanan tempat ini telah mencapai 23 tahun.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Jadwal Ibadah -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mt-10">
+
+            <h2 class="text-3xl font-bold text-blue-700 mb-6">
+                Jadwal Ibadah
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+
+                <!-- Ibadah Umum -->
+                <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-3">
+                        Ibadah Umum & Sekolah Minggu
+                    </h3>
+
+                    <p class="text-gray-700">
+                        Diadakan setiap hari Minggu pukul
+                        <span class="font-semibold">
+                            17.00 WIB
+                        </span>.
+                    </p>
+
+                </div>
+
+                <!-- Komsel -->
+                <div class="bg-green-50 p-6 rounded-xl border border-green-100">
+
+                    <h3 class="text-2xl font-semibold text-green-700 mb-3">
+                        Ibadah Komsel
+                    </h3>
+
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+
+                        <li>
+                            Wonosaren — setiap hari Rabu pukul 18.00 WIB
+                        </li>
+
+                        <li>
+                            Bibis — setiap hari Kamis pukul 18.00 WIB
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- Pondok Daud -->
+                <div class="bg-yellow-50 p-6 rounded-xl border border-yellow-100">
+
+                    <h3 class="text-2xl font-semibold text-yellow-700 mb-3">
+                        Pondok Daud
+                    </h3>
+
+                    <p class="text-gray-700">
+                        Diadakan setiap hari Jumat pukul
+                        <span class="font-semibold">
+                            18.00 WIB
+                        </span>.
+                    </p>
+
+                </div>
+
+                <!-- Pelayanan Mahasiswa -->
+                <div class="bg-purple-50 p-6 rounded-xl border border-purple-100">
+
+                    <h3 class="text-2xl font-semibold text-purple-700 mb-3">
+                        Pelayanan Mahasiswa Teologi
+                    </h3>
+
+                    <p class="text-gray-700">
+                        Gereja ini dipercaya oleh beberapa sekolah tinggi teologi
+                        dan kampus untuk membantu mahasiswa teologi yang melakukan
+                        praktek pelayanan di gereja-gereja.
+                    </p>
+
+                    <p class="text-gray-700 mt-3">
+                        Mahasiswa akan diajarkan untuk melakukan pelayanan sesuai
+                        dengan kaidah firman Tuhan.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+<div class="mt-0 flex justify-center">
+
+    <a href="{% url 'home' %}"
+       class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition">
+        Kembali
+    </a>
+
+</div>
+</body>
+<!-- Chatbox -->
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="GkWeCUnxRtC7QCz6whNvf";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
+
+<!-- FOOTER -->
+<footer class="bg-blue-900 text-white text-center py-6">
+    <p>© 2026 GBT Elshaddai Solo</p>
+</footer>
+
+</body>
+</html>

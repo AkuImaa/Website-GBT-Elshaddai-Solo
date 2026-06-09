@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<script>
+setTimeout(() => {
+    const alertBox = document.getElementById("alertBox");
+    if(alertBox){
+        alertBox.style.opacity = "0";
+        setTimeout(() => {
+            alertBox.remove();
+        }, 500);
+    }
+}, 2000);
+
+function togglePassword(){
+    const passwordInput =
+       document.getElementById("password");
+    if(passwordInput.type === "password"){
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+
+</script>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+<div class="bg-white p-8 rounded-xl shadow-md w-96">
+
+    <h2 class="text-2xl font-bold mb-6 text-center">
+        Login User
+    </h2>
+
+<form method="POST" action="{% url 'login' %}">
+
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" >
+
+      <div class="relative mb-4">
+
+    <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+    <!-- BUTTON LIHAT PASSWORD -->
+    <button type="button"
+        onclick="togglePassword()"
+        class="absolute right-3 top-2 text-gray-500 hover:text-gray-700">
+        👁
+    </button>
+</div>
+       <button type="submit"
+		onclick="this.innerHTML='Loading...'"
+		class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
+		Login
+	</button>
+    </form>
+	
+	
+ <div class="flex justify-between items-center mt-2">
+		<a href="{% url 'daftar' %}" 
+       class="text-blue-500 hover:underline">
+       Belum Punya Akun?
+    </a>
+
+    <a href="{% url 'lupa_password' %}"
+       class="text-blue-500 hover:underline">
+       Lupa Password?
+    </a>
+
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./output.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-blue-900 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+            <img src="{% static '/photo/logo.jpg' %}" class="w-10 h-10 rounded-full">
+            <a href="{% url 'home' %}" class="text-white font-bold text-lg">
+    GBT Elshaddai Solo
+</a>
+        </div>
+<!-- DROPDOWN MENU -->
+        <nav>
+            <ul class="flex gap-6">
+				<div class="relative group">
+				<button class="text-white font-medium">
+				Menu
+				</button>
+
+					<div class="absolute opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 bg-white text-black mt-2 rounded-lg shadow-lg w-48">
+						<a href="{% url 'jadwalibadah' %}" class="block px-4 py-2 hover:bg-gray-100">Ibadah</a>
+						<a href="{% url 'jadwalpelayanan' %}" class="block px-4 py-2 hover:bg-gray-100">Pelayan Altar</a>
+						<a href="{% url 'renungan_list' %}" class="block px-4 py-2 hover:bg-gray-100">Renungan</a>
+						<a href="{% url 'wartagereja' %}" class="block px-4 py-2 hover:bg-gray-100">Warta Gereja</a>
+					</div>
+				</div>
+<!-- dropwon login -->
+			<ul class="flex gap-6 items-center">
+			{% if user.is_authenticated %}
+
+    <li class="text-white">
+        Halo, {{ user.username }}
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}"
+           class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+           Logout
+        </a>
+    </li>
+{% else %}
+    <li>
+        <a href="{% url 'login' %}"
+           class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+           Login
+        </a>
+    </li>
+	{% endif %}
+
+			</ul>
+        </nav>
+    </div>
+</header>
+
+
+<!-- wartagereja-->
+<div class="max-w-6xl mx-auto py-10 px-6">
+
+    <!-- Judul -->
+    <h1 class="text-4xl font-bold mb-8">
+        {{ data.judul }}
+    </h1>
+
+    <!-- Konten -->
+    <div class="flex flex-col md:flex-row gap-10 items-start">
+
+        <!-- KIRI -->
+        <div class="md:w-2/3">
+
+            <!-- Isi -->
+            <div class="text-justify leading-relaxed text-[18px]">
+                <p>{{ data.isi }}</p>
+            </div>
+			
+<!-- Tombol Aksi -->
+<div class="mt-8 flex flex-wrap gap-4 items-center">
+
+    <!-- LIKE -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit"
+            class="flex items-center gap-2 bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200 transition">
+            ❤️ <span>Suka</span>
+        </button>
+    </form>
+
+    <!-- KOMENTAR -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit"
+            class="flex items-center gap-2 bg-yellow-100 text-yellow-600 px-4 py-2 rounded-lg hover:bg-yellow-200 transition">
+            💬 <span>Komentar</span>
+        </button>
+    </form>
+
+    <!-- SIMPAN -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit"
+            class="flex items-center gap-2 bg-blue-100 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-200 transition">
+            💾 <span>Simpan</span>
+        </button>
+    </form>
+
+    <!-- SHARE -->
+    <button onclick="copyLink()"
+        class="flex items-center gap-2 bg-green-100 text-green-600 px-4 py-2 rounded-lg hover:bg-green-200 transition">
+        🔗 <span>Bagikan</span>
+    </button>
+ </div>    
+		<!-- NOTIF -->
+		<p id="copyAlert"
+		class="hidden mt-3 text-green-600 font-semibold">
+		Link berhasil disalin!
+		</p>
+	 </div>	
+<!-- KANAN -->
+        <div class="md:w-1/3 self-start">
+
+            {% if data.gambar %}
+            <img src="{{ data.gambar.url }}"
+                 class="w-full rounded-2xl shadow-lg object-cover">
+            {% else %}
+            <div class="w-full h-64 bg-gray-200 rounded-2xl shadow-lg flex items-center justify-center text-gray-500">
+                Gambar belum tersedia
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+		<script>
+		function copyLink() {
+
+		// Ambil URL halaman
+		let link = window.location.href;
+
+// Buat input sementara
+	let tempInput = document.createElement("input");
+    tempInput.value = link;
+    document.body.appendChild(tempInput);
+
+ // Pilih text
+ tempInput.select();
+ tempInput.setSelectionRange(0, 99999);
+
+ // Copy
+    document.execCommand("copy");
+
+ // Hapus input sementara
+    document.body.removeChild(tempInput);
+
+ // Tampilkan notif
+    let alertBox = document.getElementById("copyAlert");
+    alertBox.classList.remove("hidden");
+    setTimeout(() => {
+        alertBox.classList.add("hidden");
+    }, 2000);
+}
+</script>
+
+</div>
+
+<!-- Chatbox -->
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="GkWeCUnxRtC7QCz6whNvf";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
+
+<!-- FOOTER -->
+<!-- FOOTER -->
+<footer class="bg-blue-900 text-white text-center py-6 mt-auto">
+    <p>© 2026 GBT Elshaddai Solo</p>
+</footer>
+
+</body>
+</html>
+ 

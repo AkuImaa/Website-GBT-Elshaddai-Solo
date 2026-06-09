@@ -1,0 +1,193 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./output.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
+<main class="flex-1">
+<!-- HEADER -->
+<header class="bg-blue-900 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+            <img src="{% static '/photo/logo.jpg' %}" class="w-10 h-10 rounded-full">
+            <a href="{% url 'home' %}" class="text-white font-bold text-lg">
+    GBT Elshaddai Solo
+</a>
+        </div>
+<!-- DROPDOWN MENU -->
+        <nav>
+            <ul class="flex gap-6">
+				<div class="relative group">
+				<button class="text-white font-medium">
+				Menu
+				</button>
+
+					<div class="absolute opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 bg-white text-black mt-2 rounded-lg shadow-lg w-48">
+						<a href="{% url 'jadwalibadah' %}" class="block px-4 py-2 hover:bg-gray-100">Ibadah</a>
+						<a href="{% url 'jadwalpelayanan' %}" class="block px-4 py-2 hover:bg-gray-100">Pelayan Altar</a>
+						<a href="{% url 'renungan_list' %}" class="block px-4 py-2 hover:bg-gray-100">Renungan</a>
+						<a href="{% url 'wartagereja' %}" class="block px-4 py-2 hover:bg-gray-100">Warta Gereja</a>
+					</div>
+				</div>
+<!-- dropwon login -->
+			<ul class="flex gap-6 items-center">
+			{% if user.is_authenticated %}
+
+    <li class="text-white">
+        Halo, {{ user.username }}
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}"
+           class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+           Logout
+        </a>
+    </li>
+{% else %}
+    <li>
+        <a href="{% url 'login' %}"
+           class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+           Login
+        </a>
+    </li>
+	{% endif %}
+
+			</ul>
+        </nav>
+    </div>
+</header>
+
+
+<!-- jadwalpelayanan -->
+<div class="max-w-5xl mx-auto py-10">
+    <h1 class="text-3xl font-bold mb-6">jadwal Pelayanann</h1>
+
+     {% for data in page_obj %}
+    <div class="bg-white p-5 rounded-lg shadow mb-4">
+        <h2 class="text-xl font-bold">{{ data.nama }}</h2>
+		<h2 class="text-xl font-bold"> {{ data.tanggal }} </h2>
+
+        <a href="{% url 'jadwalpelayanan' data.id %}" 
+           class="text-blue-500 mt-2 inline-block">
+           Baca selengkapnya →
+        </a>
+
+<div class="mt-6 flex items-center gap-4">
+    <!-- LIKE -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit" class="text-red-500">
+            ❤️
+        </button>
+    </form>
+
+    <!-- SIMPAN -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit" class="text-blue-500">
+            💾
+        </button>
+    </form>
+
+    <!-- SHARE -->
+		<button onclick="copyLink()"
+		class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl">
+    
+		🔗 
+		</button>
+
+		<!-- NOTIF -->
+		<p id="copyAlert"
+		class="hidden mt-3 text-green-600 font-semibold">
+		Link berhasil disalin!
+		</p>
+
+		<script>
+		function copyLink() {
+
+		// Ambil URL halaman
+		let link = window.location.href;
+
+// Buat input sementara
+	let tempInput = document.createElement("input");
+    tempInput.value = link;
+    document.body.appendChild(tempInput);
+
+ // Pilih text
+ tempInput.select();
+ tempInput.setSelectionRange(0, 99999);
+
+ // Copy
+    document.execCommand("copy");
+
+ // Hapus input sementara
+    document.body.removeChild(tempInput);
+
+ // Tampilkan notif
+    let alertBox = document.getElementById("copyAlert");
+    alertBox.classList.remove("hidden");
+    setTimeout(() => {
+        alertBox.classList.add("hidden");
+    }, 2000);
+}
+</script>
+
+</div>
+</div>
+{% endfor %}
+<a href="/" class="inline-flex items-center gap-5 bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-500 transition translate-y-1"> Kembali
+		</a>
+		
+<div class="flex justify-center mt-10 gap-2">
+
+    <!-- Tombol Previous -->
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"
+           class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+            Previous
+        </a>
+    {% endif %}
+
+    <!-- Nomor Halaman -->
+    {% for num in page_obj.paginator.page_range %}
+
+        {% if page_obj.number == num %}
+            <span class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                {{ num }}
+            </span>
+
+        {% else %}
+            <a href="?page={{ num }}"
+               class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+                {{ num }}
+            </a>
+        {% endif %}
+
+    {% endfor %}
+
+    <!-- Tombol Next -->
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"
+           class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+            Next
+        </a>
+    {% endif %}
+		
+<!-- Chatbox -->
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="GkWeCUnxRtC7QCz6whNvf";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-blue-900 text-white text-center py-6 mt-10">
+    <p>© 2026 GBT Elshaddai Solo</p>
+</footer>
+
+</body>
+</html>

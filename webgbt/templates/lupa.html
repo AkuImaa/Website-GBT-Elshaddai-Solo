@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Lupa Password</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+<div class="bg-white p-8 rounded-xl shadow-md w-96">
+
+    <h2 class="text-2xl font-bold mb-6 text-center">
+        Lupa Password
+    </h2>
+
+    <!-- ALERT -->
+    {% if messages %}
+        {% for message in messages %}
+
+        <div class="
+            mb-4 p-3 rounded-lg text-white
+
+            {% if message.tags == 'success' %}
+                bg-green-500
+            {% else %}
+                bg-red-500
+            {% endif %}
+        ">
+
+            {{ message }}
+
+        </div>
+
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <!-- USERNAME -->
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            class="w-full mb-4 px-4 py-2 border rounded-lg"
+            required>
+
+        <!-- PASSWORD BARU -->
+        <input
+            type="password"
+            name="password1"
+            placeholder="Password Baru"
+            class="w-full mb-4 px-4 py-2 border rounded-lg"
+            required>
+
+        <!-- KONFIRMASI -->
+        <input
+            type="password"
+            name="password2"
+            placeholder="Konfirmasi Password"
+            class="w-full mb-6 px-4 py-2 border rounded-lg"
+            required>
+
+        <!-- BUTTON -->
+        <button
+            type="submit"
+            class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
+
+            Ganti Password
+
+        </button>
+
+    </form>
+
+    <p class="text-center text-sm text-gray-600 mt-4">
+        Kembali ke
+        <a href="{% url 'login' %}" class="text-blue-500 hover:underline">
+            Login
+        </a>
+    </p>
+
+</div>
+
+</body>
+</html>

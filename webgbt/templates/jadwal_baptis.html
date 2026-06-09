@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Jadwal Baptis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen py-10">
+
+<div class="max-w-3xl mx-auto">
+
+    <h1 class="text-3xl font-bold mb-6 text-center">
+        Jadwal Baptis
+    </h1>
+
+    {% for item in data %}
+    <div class="bg-white p-8 rounded-xl shadow mb-6">
+
+        <div class="space-y-4">
+
+            <div>
+                <p class="text-gray-500">Nama</p>
+                <h2 class="font-bold text-xl">
+                    {{ item.nama }}
+                </h2>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Status</p>
+
+                <span class="
+                    px-4 py-1 rounded-full text-white
+
+                    {% if item.status == 'diterima' %}
+                        bg-green-500
+                    {% else %}
+                        bg-yellow-500
+                    {% endif %}
+                ">
+                    {{ item.status }}
+                </span>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Tanggal Baptis</p>
+                <h2 class="font-bold">
+                    {{ item.jadwal_baptis }}
+                </h2>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Lokasi Baptis</p>
+                <h2 class="font-bold">
+                    {{ item.lokasi_baptis }}
+                </h2>
+            </div>
+
+        </div>
+
+    </div>
+    {% empty %}
+    <div class="bg-white p-8 rounded-xl shadow text-center">
+        <p>Belum ada data baptis.</p>
+    </div>
+    {% endfor %}
+
+    <div class="flex justify-center mt-6">
+        <a href="{% url 'baptis' %}"
+           class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl transition">
+           Kembali ke Form Baptis
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

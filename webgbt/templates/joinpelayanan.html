@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Pelayanan</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen py-10 px-4">
+
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+
+    <!-- JUDUL -->
+    <h1 class="text-3xl font-bold text-center mb-2 text-blue-700">
+        Form Pendaftaran Pelayanan Altar
+    </h1>
+
+    <p class="text-center text-gray-500 mb-8">
+        Silahkan isi data dengan lengkap dan benar
+    </p>
+	
+
+    <!-- FORM -->
+    <form method="POST" class="space-y-6">
+        {% csrf_token %}
+
+        <div class="grid md:grid-cols-2 gap-5">
+
+            <!-- NAMA -->
+            <div>
+                <label class="block mb-2 font-semibold text-gray-700">
+                    Nama Lengkap
+                </label>
+
+                <input type="text"
+                       name="nama"
+                       required
+                       class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- TEMPAT LAHIR -->
+            <div>
+                <label class="block mb-2 font-semibold text-gray-700">
+                    Tempat Lahir
+                </label>
+
+                <input type="text"
+                       name="tempat_lahir"
+                       required
+                       class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- TANGGAL LAHIR -->
+            <div>
+                <label class="block mb-2 font-semibold text-gray-700">
+                    Tanggal Lahir
+                </label>
+
+                <input type="date"
+                       name="tanggal_lahir"
+                       required
+                       class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- JENIS KELAMIN -->
+            <div>
+                <label class="block mb-2 font-semibold text-gray-700">
+                    Jenis Kelamin
+                </label>
+
+                <select name="jenis_kelamin"
+                        required
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    <option value="">-- Pilih Jenis Kelamin --</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+
+                </select>
+            </div>
+
+            <!-- ALAMAT -->
+            <div class="md:col-span-2">
+                <label class="block mb-2 font-semibold text-gray-700">
+                    Alamat
+                </label>
+
+                <textarea name="alamat"
+                          rows="4"
+                          required
+                          class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+
+            <!-- NO HP -->
+            <div>
+                <label class="block mb-2 font-semibold text-gray-700">
+                    No HP
+                </label>
+
+                <input type="text"
+                       name="no_hp"
+                       required
+                       class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- BIDANG PELAYANAN -->
+            <div>
+                <label class="block mb-2 font-semibold text-gray-700">
+                    Bidang Pelayanan
+                </label>
+
+                <select name="bidang_pelayanan"
+                        required
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    <option value="">-- Pilih Bidang Pelayanan --</option>
+                    <option value="Singer">Singer</option>
+                    <option value="Music">Music</option>
+                    <option value="Multimedia">Multimedia</option>
+                    <option value="Usher">Usher</option>
+                    <option value="Doa">Doa</option>
+                    <option value="Tamborin">Tamborin</option>
+
+                </select>
+            </div>
+
+            <!-- PENGALAMAN -->
+            <div class="md:col-span-2">
+                <label class="block mb-2 font-semibold text-gray-700">
+                    Pengalaman Pelayanan
+                </label>
+
+                <textarea name="pengalaman"
+                          rows="4"
+                          class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+
+        </div>
+
+        <!-- BUTTON -->
+        <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition duration-300">
+
+            Daftar Pelayanan
+
+        </button>
+    </form>
+</div>
+<div class="flex justify-center mt-6">
+	 <a href="{% url 'home' %}"  class="inline-flex items-center gap-5 bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-500 transition translate-y-8 translate-x-2 "> kembali</a>
+	 </div>
+</body>
+</html>

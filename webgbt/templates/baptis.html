@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendaftaran Baptis</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<script>
+const form = document.querySelector("form");
+const btn = document.getElementById("btnDraft");
+
+form.addEventListener("submit", function() {
+
+    btn.innerHTML = "Menyimpan Data...";
+    btn.disabled = true;
+
+    btn.classList.remove("bg-blue-500");
+    btn.classList.add("bg-gray-400");
+});
+</script>
+<body class="bg-gray-100 py-10">
+
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-2">
+        Form Pendaftaran Baptis
+    </h1>
+
+    <p class="text-center text-gray-500 mb-8">
+        Silakan isi data dengan lengkap dan benar
+    </p>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <!-- NAMA -->
+        <div class="mb-5">
+            <label class="block mb-2 font-semibold">
+                Nama Lengkap
+            </label>
+
+            <input
+                type="text"
+                name="nama"
+                placeholder="Masukkan nama lengkap"
+                class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required>
+        </div>
+
+        <!-- TEMPAT LAHIR -->
+        <div class="grid md:grid-cols-2 gap-4 mb-5">
+
+            <div>
+                <label class="block mb-2 font-semibold">
+                    Tempat Lahir
+                </label>
+
+                <input
+                    type="text"
+                    name="tempat_lahir"
+                    placeholder="Contoh: Solo"
+                    class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required>
+            </div>
+
+            <div>
+                <label class="block mb-2 font-semibold">
+                    Tanggal Lahir
+                </label>
+
+                <input
+                    type="date"
+                    name="tanggal_lahir"
+                    class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required>
+            </div>
+
+        </div>
+
+        <!-- JENIS KELAMIN -->
+        <div class="mb-5">
+
+            <label class="block mb-2 font-semibold">
+                Jenis Kelamin
+            </label>
+
+            <select
+                name="jenis_kelamin"
+                class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required>
+
+                <option value="">-- Pilih Jenis Kelamin --</option>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+
+            </select>
+
+        </div>
+
+        <!-- ALAMAT -->
+        <div class="mb-5">
+
+            <label class="block mb-2 font-semibold">
+                Alamat
+            </label>
+
+            <textarea
+                name="alamat"
+                rows="4"
+                placeholder="Masukkan alamat lengkap"
+                class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required></textarea>
+
+        </div>
+
+        <!-- NO HP -->
+        <div class="mb-5">
+
+            <label class="block mb-2 font-semibold">
+                Nomor HP
+            </label>
+
+            <input
+                type="text"
+                name="no_hp"
+                placeholder="08xxxxxxxxxx"
+                class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required>
+
+        </div>
+
+        <!-- STATUS -->
+        <div class="mb-5">
+
+            <label class="block mb-2 font-semibold">
+                Status Baptis
+            </label>
+
+            <select
+                name="status_baptis"
+                class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required>
+
+                <option value="">-- Pilih Status --</option>
+                <option value="Belum Pernah Baptis">Belum Pernah Baptis</option>
+                <option value="Pindahan Gereja">Pindahan Gereja</option>
+
+            </select>
+
+        </div>
+
+        <!-- CHECKBOX -->
+        <div class="mb-6 flex items-start gap-3">
+
+            <input
+                type="checkbox"
+                required
+                class="mt-1">
+
+            <p class="text-sm text-gray-600">
+                Saya menyatakan bahwa data yang saya isi benar.
+            </p>
+
+        </div>
+ 
+    <!-- input form -->
+
+<!-- BUTTON DAFTAR -->
+<button
+    type="submit"
+    id="btnDraft"
+    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl transition">
+
+    Daftar Baptis
+
+</button>
+
+</form>
+
+<!-- BUTTON LIHAT JADWAL -->
+{% if data %}
+
+<a href="{% url 'jadwal_baptis'%}"
+   class="
+   block w-full
+   text-center
+   mt-4
+   bg-green-500 hover:bg-green-600
+   text-white font-semibold
+   py-3 rounded-xl transition">
+
+    Lihat Jadwal Baptis
+
+</a>
+
+{% endif %}
+
+<!-- ALERT -->
+<div
+    id="successAlert"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+
+    <div class="bg-white p-8 rounded-2xl shadow-xl text-center w-96">
+
+        <div class="text-5xl mb-4">
+            ✅
+        </div>
+
+        <h2 class="text-2xl font-bold text-green-600 mb-2">
+            Berhasil!
+        </h2>
+
+        <p class="text-gray-600 mb-6">
+            Surat baptis berhasil dikirim.
+        </p>
+
+        <!-- BUTTON KEMBALI -->
+        <a href="/"
+           class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl transition">
+
+           Kembali ke Halaman Utama
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+
+const form = document.querySelector("form");
+const btn = document.getElementById("btnDraft");
+const alertBox = document.getElementById("successAlert");
+
+form.addEventListener("submit", function(){
+
+    btn.innerHTML = "Menyimpan Data...";
+    btn.disabled = true;
+
+    btn.classList.remove("bg-blue-500");
+    btn.classList.add("bg-gray-400");
+
+});
+
+// TAMPILKAN ALERT SETELAH BERHASIL
+{% if messages %}
+
+window.onload = function(){
+
+    alertBox.classList.remove("hidden");
+
+}
+
+{% endif %}
+
+</script>
+</body>
+<div class="flex justify-center mt-6">
+	 <a href="{% url 'home' %}"  class="inline-flex items-center gap-5 bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-500 transition translate-y-8 translate-x-2 "> kembali</a>
+	 </div>
+</html>
